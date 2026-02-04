@@ -35,9 +35,9 @@ private val DarkColorScheme = darkColorScheme(
     secondary = CoffeeAccentDark,
     onSecondary = CoffeeBrown,
     background = CoffeeBackgroundDark,
-    onBackground = Color.Black,  // Dark text on light background
+    onBackground = Color.Black,
     surface = CoffeeSurfaceDark,
-    onSurface = Color.Black,  // Dark text on light surface
+    onSurface = Color.Black,
     surfaceVariant = CoffeeAccent,
     onSurfaceVariant = CoffeeBrown
 )
@@ -53,22 +53,16 @@ fun CoffeeNearbyTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            
-            // Set status bar color to dark brown
             window.statusBarColor = if (darkTheme) {
                 CoffeeBrownDarker.toArgb()
             } else {
                 CoffeeBrownDark.toArgb()
             }
-            
-            // Set navigation bar color
             window.navigationBarColor = if (darkTheme) {
                 CoffeeBackgroundDark.toArgb()
             } else {
                 Color.White.toArgb()
             }
-            
-            // Make status bar icons light/dark based on background
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
             WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars = !darkTheme
         }

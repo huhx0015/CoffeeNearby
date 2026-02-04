@@ -12,6 +12,11 @@ Coffee Nearby: An Android application that displays a list of coffee shops using
 
 Please note that a Yelp AI developer key is required to compile and run this project. A Yelp AI developer key can be obtained from: https://docs.developer.yelp.com/
 
+Once obtained, a root file called "keys.properties" will need to be created, with the following fields defined:
+* YELP_API_KEY
+* YELP_BASE_URL
+* YELP_CLIENT_ID
+
 ## Resources
 
 ### Architecture
