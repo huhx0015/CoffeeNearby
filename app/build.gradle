@@ -46,22 +46,26 @@ android {
 }
 
 ext {
-  activity_version = "1.12.2"
+  activity_version = "1.12.3"
   app_compat_version = "1.7.1"
   coil_version = "3.3.0"
-  compose_activity_version = "1.12.2"
+  compose_activity_version = "1.12.3"
   compose_bom_version = "2026.01.00"
   constraint_layout_version = "2.2.1"
   core_ktx_version = "1.17.0"
+  core_testing_version = "2.2.0"
+  coroutines_test_version = "1.9.0"
   espresso_version = "3.7.0"
   fragment_version = "1.8.9"
   hilt_nav_compose_version = "1.3.0"
   junit_ext_version = "1.3.0"
   junit_version = "4.13.2"
   lifecycle_version = "2.10.0"
+  mockk_version = "1.13.13"
   moshi_version = "1.15.2"
   okhttp_bom_version = "5.3.2"
   retrofit_version = "3.0.0"
+  turbine_version = "1.2.0"
 }
 
 dependencies {
@@ -120,5 +124,10 @@ dependencies {
   androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 
   // TEST:
+  testImplementation "androidx.arch.core:core-testing:$core_testing_version"
+  testImplementation "app.cash.turbine:turbine:$turbine_version"
   testImplementation "junit:junit:$junit_version"
+  testImplementation "io.mockk:mockk:$mockk_version"
+  testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_test_version"
+  testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
 }

@@ -1,7 +1,9 @@
 package com.huhx0015.coffeenearby.network.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class CoffeeShopResponse(
   @Json(name = "businesses")
   val businesses: List<Business>,
@@ -13,6 +15,7 @@ data class CoffeeShopResponse(
   val region: Region
 )
 
+@JsonClass(generateAdapter = true)
 data class Business(
   @Json(name = "id")
   val id: String,
@@ -63,6 +66,7 @@ data class Business(
   val distance: Double
 )
 
+@JsonClass(generateAdapter = true)
 data class Category(
   @Json(name = "alias")
   val alias: String,
@@ -71,6 +75,7 @@ data class Category(
   val title: String
 )
 
+@JsonClass(generateAdapter = true)
 data class Coordinates(
   @Json(name = "latitude")
   val latitude: Double,
@@ -79,6 +84,7 @@ data class Coordinates(
   val longitude: Double
 )
 
+@JsonClass(generateAdapter = true)
 data class Location(
   @Json(name = "address1")
   val address1: String?,
@@ -105,11 +111,13 @@ data class Location(
   val displayAddress: List<String>
 )
 
+@JsonClass(generateAdapter = true)
 data class Region(
   @Json(name = "center")
   val center: Center
 )
 
+@JsonClass(generateAdapter = true)
 data class Center(
   @Json(name = "longitude")
   val longitude: Double,

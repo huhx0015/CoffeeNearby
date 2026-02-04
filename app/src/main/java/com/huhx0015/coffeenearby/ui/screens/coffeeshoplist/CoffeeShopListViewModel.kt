@@ -32,8 +32,8 @@ class CoffeeShopListViewModel @Inject constructor(
   override suspend fun processIntent(intent: CoffeeShopListIntent) {
     when (intent) {
       is CoffeeShopListIntent.LoadCoffeeShopListIntent -> onLoadCoffeeShopList()
-      is CoffeeShopListIntent.LoadMoreCoffeeShopsIntent -> TODO()
-      is CoffeeShopListIntent.RefreshCoffeeShopListIntent -> TODO()
+      is CoffeeShopListIntent.LoadMoreCoffeeShopsIntent -> onLoadMoreCoffeeShops()
+      is CoffeeShopListIntent.RefreshCoffeeShopListIntent -> onRefreshCoffeeShopList()
     }
   }
 
@@ -42,6 +42,7 @@ class CoffeeShopListViewModel @Inject constructor(
     if (isLoading) return
 
     _state.update { it.coffeeShopLoading() }
+
     loadCoffeeShopList()
   }
 
@@ -53,6 +54,40 @@ class CoffeeShopListViewModel @Inject constructor(
         _state.update { it.coffeeShopLoaded(coffeeShopList) }
       }.onFailure { error ->
         _events.emit(CoffeeShopListEvent.ErrorEvent(errorMessage = error.message))
+        _state.update { it.copy(isCoffeeShopListLoading = false, isCoffeeShopListRefreshing = false) }
+      }
+    }
+  }
+
+  private fun onRefreshCoffeeShopList() {
+    val isRefreshing = state.value.isCoffeeShopListRefreshing
+    if (isRefreshing) return
+
+    _state.update { it.copy(currentOffset = 0, hasMorePages = true).coffeeShopRefreshing() }
+    loadCoffeeShopList()
+  }
+
+  private fun onLoadMoreCoffeeShops() {
+    val currentState = state.value
+    val isLoadingMore = currentState.isCoffeeShopListLoadingMore
+    val isLoading = currentState.isCoffeeShopListLoading
+    val hasMorePages = currentState.hasMorePages
+
+    if (isLoadingMore || isLoading || !hasMorePages) return
+
+    _state.update { it.coffeeShopLoadingMore() }
+    loadMoreCoffeeShops()
+  }
+
+  private fun loadMoreCoffeeShops() {
+    viewModelScope.launch {
+      runCatching {
+        coffeeShopRepository.getCoffeeShops(offset = state.value.currentOffset)
+      }.onSuccess { newCoffeeShops ->
+        _state.update { it.coffeeShopLoadedMore(newCoffeeShops) }
+      }.onFailure { error ->
+        _events.emit(CoffeeShopListEvent.ErrorEvent(errorMessage = error.message))
+        _state.update { it.copy(isCoffeeShopListLoadingMore = false) }
       }
     }
   }

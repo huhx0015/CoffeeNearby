@@ -1,9 +1,9 @@
 buildscript {
   ext {
-    android_gradle_plugin_version = '8.13.2'
-    hilt_version = "2.57.2"
+    android_gradle_plugin_version = '9.0.0'
+    hilt_version = "2.59.1"
     kotlin_version = "2.2.21"
-    ksp_version = "2.2.21-2.0.4"
+    ksp_version = '2.3.2'
   }
 
   repositories {

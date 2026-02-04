@@ -14,6 +14,9 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 import kotlin.jvm.java
 
+private const val HEADER_AUTHORIZATION = "Authorization"
+private const val HEADER_BEARER = "Bearer"
+
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkModule {
@@ -23,7 +26,7 @@ class NetworkModule {
   fun provideAuthInterceptor(): Interceptor {
     return Interceptor { chain ->
       val request = chain.request().newBuilder()
-        .addHeader("Authorization", "Bearer ${BuildConfig.YELP_API_KEY})")
+        .addHeader(HEADER_AUTHORIZATION, "$HEADER_BEARER ${BuildConfig.YELP_API_KEY}")
         .build()
       chain.proceed(request)
     }
